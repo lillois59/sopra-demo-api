@@ -26,11 +26,11 @@ Une API REST sécurisée développée avec Spring Boot, démontrant une architec
 
 ### 1. Page d'accueil
 Accédez à :  
-`https://votre-url.up.railway.app/`
+`https://sopra-demo-api-production.up.railway.app/`
 
 ### 2. Documentation interactive (Swagger UI)
 Accédez à :  
-`https://votre-url.up.railway.app/swagger-ui.html`
+`https://sopra-demo-api-production.up.railway.app/swagger-ui/index.html`
 
 ### 3. Étapes de test
 
