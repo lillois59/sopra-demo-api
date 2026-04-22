@@ -8,6 +8,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "index";   // il va chercher index.html dans static ou templates
+        return "forward:/index.html";   // Redirige vers ta page d'accueil
+    }
+
+    @GetMapping("/home")
+    public String homePage() {
+        return "forward:/index.html";
     }
 }
