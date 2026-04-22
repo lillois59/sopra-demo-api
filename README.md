@@ -1,4 +1,4 @@
-# Demo API - Gestion des Utilisateurs Sécurisée
+# PoC API - Gestion des Utilisateurs Sécurisée
 
 **Projet Technique - Sopra Steria Secteur Défense**
 
@@ -63,13 +63,20 @@ json
 }
 
 Structure du projetconfig/ → Configuration Spring Security
+
 security/ → Gestion JWT + Filtre d'authentification
+
 dto/ → Objets de transfert (LoginRequest, AuthResponse)
+
 controller/ → Contrôleurs (UserController, AdminController)
+
 service/ → Logique métier
+
 repository/ → Accès à la base de données
 
 Développé par
-Sofiane Dami
+
+Lillois59
+
 full-stack web dev
 
