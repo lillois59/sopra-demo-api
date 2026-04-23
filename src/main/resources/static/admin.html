@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Sopra Steria - Demo API Défense</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -21,26 +20,10 @@
         .navbar {
             background: rgba(10, 37, 64, 0.95);
             padding: 1.2rem 8%;
-=======
-    <title>SecureAccess - Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f8fafc;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar {
-            background: #0a2540;
-            color: white;
-            padding: 1rem 5%;
->>>>>>> e25f57535c711214800d8ceb8a987ef00dd5f327
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-<<<<<<< HEAD
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
@@ -100,44 +83,10 @@
             opacity: 0.7;
             font-size: 0.95rem;
         }
-=======
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        input, select, button {
-            padding: 12px;
-            margin: 10px 0;
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid #cbd5e1;
-        }
-        button {
-            background: #00b4d8;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-        button:hover {
-            background: #0099cc;
-        }
-        .hidden { display: none; }
-        #usersList { margin-top: 20px; }
->>>>>>> e25f57535c711214800d8ceb8a987ef00dd5f327
     </style>
 </head>
 <body>
     <nav class="navbar">
-<<<<<<< HEAD
         <div class="logo">Sopra Steria</div>
         <div>Demo API - Secteur Défense</div>
     </nav>
@@ -179,128 +128,5 @@
             Développé par Sofiane Dami • Démo Technique pour Sopra Steria Lille • Avril 2026
         </div>
     </div>
-=======
-        <div style="font-size: 1.6rem; font-weight: bold; color: #00b4d8;">SecureAccess</div>
-        <div>Interface Administrateur</div>
-    </nav>
-
-    <div class="container">
-        <!-- Login -->
-        <div id="loginScreen" class="card">
-            <h2>Connexion Administrateur</h2>
-            <input type="text" id="username" placeholder="Nom d'utilisateur" value="sopra_admin">
-            <input type="password" id="password" placeholder="Mot de passe" value="Admin2026!">
-            <button onclick="login()">Se connecter</button>
-            <p id="errorMsg" style="color: red; margin-top: 10px;"></p>
-        </div>
-
-        <!-- Dashboard -->
-        <div id="dashboard" class="hidden">
-            <div class="card">
-                <h3>Créer un nouvel utilisateur</h3>
-                <input type="text" id="newUsername" placeholder="Nom d'utilisateur">
-                <input type="password" id="newPassword" placeholder="Mot de passe">
-                <select id="newRole">
-                    <option value="USER">Utilisateur</option>
-                    <option value="ADMIN">Administrateur</option>
-                </select>
-                <button onclick="createUser()">Créer l'utilisateur</button>
-            </div>
-
-            <div class="card">
-                <h3>Liste des utilisateurs</h3>
-                <button onclick="loadUsers()">Actualiser la liste</button>
-                <div id="usersList"></div>
-            </div>
-
-            <button onclick="logout()" style="background:#ef4444; margin-top:20px;">Déconnexion</button>
-        </div>
-    </div>
-
-    <script>
-        let token = "";
-
-        async function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            const errorMsg = document.getElementById("errorMsg");
-
-            try {
-                const res = await fetch('https://sopra-demo-api-production.up.railway.app/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.token) {
-                    token = data.token;
-                    document.getElementById("loginScreen").classList.add("hidden");
-                    document.getElementById("dashboard").classList.remove("hidden");
-                    loadUsers();
-                } else {
-                    errorMsg.textContent = "Identifiants incorrects";
-                }
-            } catch (e) {
-                errorMsg.textContent = "Erreur de connexion au serveur";
-            }
-        }
-
-        async function createUser() {
-            const username = document.getElementById("newUsername").value;
-            const password = document.getElementById("newPassword").value;
-            const role = document.getElementById("newRole").value;
-
-            if (!username || !password) {
-                alert("Veuillez remplir le nom d'utilisateur et le mot de passe");
-                return;
-            }
-
-            try {
-                const res = await fetch('https://sopra-demo-api-production.up.railway.app/api/admin/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    },
-                    body: JSON.stringify({ username, password, role })
-                });
-
-                if (res.ok) {
-                    alert("Utilisateur créé avec succès !");
-                    loadUsers();
-                } else {
-                    alert("Erreur lors de la création (username déjà utilisé ?)");
-                }
-            } catch (e) {
-                alert("Erreur de connexion");
-            }
-        }
-
-        async function loadUsers() {
-            try {
-                const res = await fetch('https://sopra-demo-api-production.up.railway.app/api/users', {
-                    headers: { 'Authorization': 'Bearer ' + token }
-                });
-                const users = await res.json();
-                let html = "<ul>";
-                users.forEach(u => {
-                    html += `<li><strong>${u.username}</strong> — Rôle : ${u.role}</li>`;
-                });
-                html += "</ul>";
-                document.getElementById("usersList").innerHTML = html;
-            } catch (e) {
-                document.getElementById("usersList").innerHTML = "<p>Erreur lors du chargement</p>";
-            }
-        }
-
-        function logout() {
-            token = "";
-            document.getElementById("dashboard").classList.add("hidden");
-            document.getElementById("loginScreen").classList.remove("hidden");
-        }
-    </script>
->>>>>>> e25f57535c711214800d8ceb8a987ef00dd5f327
 </body>
 </html>
