@@ -23,29 +23,23 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
-            if (user == null || user.getUsername() == null || user.getPassword() == null || user.getRole() == null) {
+            // Ignorer l'id envoyé par le client pour éviter les conflits Hibernate
+            user.setId(null);
+
+            if (user.getUsername() == null || user.getPassword() == null || user.getRole() == null) {
                 return ResponseEntity.badRequest().body("Username, password and role are required");
             }
 
-            // Log pour debug
-            System.out.println("=== ADMIN CREATE USER ===");
-            System.out.println("Username: " + user.getUsername());
-            System.out.println("Role: " + user.getRole());
-
             User created = userService.createUser(user);
-
-            System.out.println("User created successfully: " + created.getUsername());
             return ResponseEntity.ok(created);
 
         } catch (DataIntegrityViolationException e) {
-            System.err.println("Duplicate username: " + user.getUsername());
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Username '" + user.getUsername() + "' already exists");
+                    .body("Username already exists. Please choose another one.");
         } catch (Exception e) {
-            System.err.println("Error creating user: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Internal error: " + e.getMessage());
+                    .body("Error creating user: " + e.getMessage());
         }
     }
 }
