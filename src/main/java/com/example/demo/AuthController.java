@@ -28,8 +28,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
-            User user = userService.getByUsername(loginRequest.getUsername());
-
+           User user = userService.getByUsername(loginRequest.getUsername())
+        .orElseThrow(() -> new RuntimeException("User not found"));
             if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new AuthResponse("Invalid username or password"));

@@ -23,7 +23,20 @@ public class SecurityConfig {
             .cors(cors -> cors.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+<<<<<<< HEAD
                 .anyRequest().permitAll()   // Tout est accessible pour la démo
+=======
+                // Routes complètement publiques
+                .requestMatchers("/", "/index.html", "/admin.html", "/api/auth/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                // Routes protégées
+                .requestMatchers("/api/users").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                // Tout le reste doit être authentifié
+                .anyRequest().authenticated()
+>>>>>>> e25f57535c711214800d8ceb8a987ef00dd5f327
             );
 
         return http.build();
