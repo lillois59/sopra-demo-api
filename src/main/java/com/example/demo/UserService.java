@@ -16,14 +16,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Crée un nouvel utilisateur avec mot de passe hashé (BCrypt)
-     */
     public User createUser(User user) {
-        if (user.getPassword() == null || user.getPassword().isBlank()) {
-            throw new IllegalArgumentException("Le mot de passe est obligatoire");
-        }
+        // Hashage du mot de passe
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        
+        // Sauvegarde
         return repo.save(user);
     }
 
@@ -31,18 +28,7 @@ public class UserService {
         return repo.findAll();
     }
 
-    /**
-     * Recherche un utilisateur par username (utilisé pour le login)
-     */
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> getByUsername(String username) {
         return repo.findByUsername(username);
-    }
-
-    /**
-     * Recherche un utilisateur par username avec exception si non trouvé
-     */
-    public User getByUsername(String username) {
-        return repo.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé : " + username));
     }
 }
