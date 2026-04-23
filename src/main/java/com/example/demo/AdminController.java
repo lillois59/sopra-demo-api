@@ -4,7 +4,6 @@ import com.example.demo.User;
 import com.example.demo.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +22,6 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
-            // Ignorer l'id envoyé par le client pour éviter les conflits Hibernate
             user.setId(null);
 
             if (user.getUsername() == null || user.getPassword() == null || user.getRole() == null) {
@@ -33,9 +31,6 @@ public class AdminController {
             User created = userService.createUser(user);
             return ResponseEntity.ok(created);
 
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Username already exists. Please choose another one.");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

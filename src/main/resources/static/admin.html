@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sopra Steria - Demo API Défense</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0a2540;
+            --accent: #00b4d8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, #1e40af 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: rgba(10, 37, 64, 0.95);
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .container {
+            max-width: 1100px;
+            margin: 80px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.35rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 50px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 35px 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #00d4ff;
+            transform: scale(1.05);
+        }
+        .footer {
+            margin-top: 100px;
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Sopra Steria</div>
+        <div>Demo API - Secteur Défense</div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Système de Gestion des Utilisateurs</h1>
+            <p>API sécurisée Spring Boot avec authentification JWT et contrôle d'accès par rôles</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h2><i class="fas fa-sign-in-alt"></i> Authentification</h2>
+                <p>Testez la connexion sécurisée avec génération de token JWT</p>
+                <a href="swagger-ui.html" class="btn" target="_blank">Accéder à Swagger UI</a>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-users"></i> Gestion des Utilisateurs</h2>
+                <p>Visualisez et gérez les comptes selon les rôles (ADMIN / USER)</p>
+                <p><strong>Identifiants Admin :</strong><br>
+                   Username : sopra_admin<br>
+                   Password : Admin2026!</p>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-shield-alt"></i> Sécurité Défense</h2>
+                <p>Implémentation conforme aux standards du secteur Défense :</p>
+                <ul style="text-align: left; margin: 15px 0; line-height: 1.8;">
+                    <li>Hashage BCrypt (force 12)</li>
+                    <li>JWT stateless</li>
+                    <li>Contrôle d'accès par rôles</li>
+                    <li>Protection des endpoints</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            Développé par Sofiane Dami • Démo Technique pour Sopra Steria Lille • Avril 2026
+        </div>
+    </div>
+</body>
+</html>
