@@ -3,65 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo API - Sopra Steria Défense</title>
+    <title>Sopra Steria - SecureAccess</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root {
+            --navy: #0a2540;
+            --accent: #00b4d8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, #1e40af 100%);
             color: white;
-            margin: 0;
             min-height: 100vh;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+        .navbar {
+            background: rgba(10, 37, 64, 0.95);
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        h1 { font-size: 3em; margin-bottom: 10px; }
-        h2 { color: #ecf0f1; margin-bottom: 40px; }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+        .container {
+            max-width: 1100px;
+            margin: 80px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+        h1 { font-size: 3.2rem; margin-bottom: 20px; }
+        p { font-size: 1.35rem; opacity: 0.9; max-width: 700px; margin: 0 auto 50px; }
         .btn {
-            background-color: #00b894;
+            background: var(--accent);
             color: white;
-            padding: 16px 32px;
-            font-size: 18px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 15px;
+            padding: 16px 40px;
+            border-radius: 12px;
             text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
             display: inline-block;
+            margin: 15px;
+            transition: 0.3s;
         }
         .btn:hover {
-            background-color: #00a085;
-            transform: translateY(-3px);
+            background: #00d4ff;
+            transform: translateY(-4px);
         }
         .footer {
-            margin-top: 80px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            font-size: 0.95em;
-            opacity: 0.85;
+            margin-top: 120px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Demo API</h1>
-        <h2>Sopra Steria - Secteur Défense</h2>
-        <p>Démonstration technique pour Sopra Steria</p>
-        
-        <p style="font-size: 1.3em; margin: 30px 0;">
-            API sécurisée avec Spring Boot + JWT + Rôles (ADMIN / USER)
-        </p>
+    <nav class="navbar">
+        <div class="logo">SecureAccess</div>
+        <div>Sopra Steria - Secteur Défense</div>
+    </nav>
 
-        <a href="/swagger-ui.html" target="_blank">
-            <button class="btn">📋 Tester l'API avec Swagger UI</button>
+    <div class="container">
+        <h1>Plateforme de Gestion des Accès</h1>
+        <p>Interface sécurisée pour la gestion des utilisateurs et des permissions</p>
+        
+        <a href="admin.html" class="btn">
+            <i class="fas fa-arrow-right"></i> Accéder à l'interface Admin
         </a>
 
         <div class="footer">
-            <p><strong>Sofiane Dami @sw6lnd</strong> • R&D Project-x © 2026</p>
-            
+            Démo Technique - Sopra Steria Lille • Avril 2026
         </div>
     </div>
 </body>
