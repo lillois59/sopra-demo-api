@@ -7,6 +7,7 @@ import com.example.demo.User;
 import com.example.demo.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,10 +17,12 @@ public class AuthController {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService, JwtUtil jwtUtil) {
+    public AuthController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
@@ -27,8 +30,10 @@ public class AuthController {
         try {
             User user = userService.getByUsername(loginRequest.getUsername());
 
-            if (!user.getPassword().equals(loginRequest.getPassword())) {  // Comparaison simple pour la démo
-                throw new RuntimeException("Invalid password");
+            // Comparaison sécurisée avec le hash
+            if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new AuthResponse("Invalid username or password"));
             }
 
             String token = jwtUtil.generateToken(user);
