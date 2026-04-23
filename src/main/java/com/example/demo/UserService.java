@@ -17,8 +17,27 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User createUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return repo.save(user);
+        try {
+            System.out.println("=== USER SERVICE CREATE ===");
+            System.out.println("Username: " + user.getUsername());
+            System.out.println("Role: " + user.getRole());
+
+            // Hashage du mot de passe
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+
+            System.out.println("Password hashed successfully");
+
+            User saved = repo.save(user);
+            System.out.println("User saved successfully with id: " + saved.getId());
+
+            return saved;
+
+        } catch (Exception e) {
+            System.err.println("Error in createUser: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     public List<User> getAllUsers() {
