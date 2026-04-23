@@ -30,7 +30,6 @@ public class AuthController {
         try {
             User user = userService.getByUsername(loginRequest.getUsername());
 
-            // Comparaison sécurisée avec le hash
             if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new AuthResponse("Invalid username or password"));
@@ -41,6 +40,7 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse(token));
 
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new AuthResponse("Invalid username or password"));
         }
