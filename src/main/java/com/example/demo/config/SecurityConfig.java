@@ -24,8 +24,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 // Routes publiques
-                .requestMatchers("/", "/index.html", "/admin.html").permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/", "/index.html", "/admin.html", "/api/auth/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
 
                 // Routes protégées
