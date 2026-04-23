@@ -20,4 +20,9 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    @GetMapping("/test")
+    public String test() {
+        return "UserController is working!";
+    }
 }
