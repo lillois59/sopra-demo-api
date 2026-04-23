@@ -19,20 +19,6 @@ public class AdminController {
     @PostMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
     public User createUser(@RequestBody User user) {
-        try {
-            if (user == null || user.getUsername() == null || user.getPassword() == null || user.getRole() == null) {
-                throw new IllegalArgumentException("Username, password and role are required");
-            }
-
-            // Log pour voir ce qui arrive
-            System.out.println("Creating user: " + user.getUsername() + " with role " + user.getRole());
-
-            return userService.createUser(user);
-
-        } catch (Exception e) {
-            System.err.println("Error in AdminController: " + e.getMessage());
-            e.printStackTrace();
-            throw e;   // Pour voir l'erreur réelle
-        }
+        return userService.createUser(user);
     }
 }
