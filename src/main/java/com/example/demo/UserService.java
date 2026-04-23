@@ -17,10 +17,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User createUser(User user) {
-        // Hashage du mot de passe
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        
-        // Sauvegarde
         return repo.save(user);
     }
 
