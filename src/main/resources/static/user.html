@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User — Sopra Défense</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #00ff88; --green2: #00cc66; --dark: #050a08; --panel: #060f0a;
+      --border: #0f3020; --text: #b0ffd0; --dim: #3a6a50; --red: #ff3333;
+    }
+    body { background: var(--dark); color: var(--text); font-family: 'Share Tech Mono', monospace; min-height: 100vh; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(0,255,136,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.025) 1px, transparent 1px);
+      background-size: 40px 40px; animation: g 20s linear infinite; pointer-events: none;
+    }
+    @keyframes g { to { background-position: 40px 40px; } }
+
+    header {
+      padding: 1rem 2rem; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(5,10,8,0.95);
+    }
+    .hlogo { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--green); letter-spacing: 0.3em; }
+    .hback { font-size: 0.65rem; color: var(--dim); text-decoration: none; letter-spacing: 0.15em; }
+    .hback:hover { color: var(--green); }
+
+    main { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+
+    #login-section { display: block; }
+    #dashboard-section { display: none; }
+
+    .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--green); text-shadow: 0 0 20px rgba(0,255,136,0.4); margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+    .section-sub { font-size: 0.65rem; color: var(--dim); letter-spacing: 0.2em; margin-bottom: 2rem; }
+
+    .panel {
+      background: var(--panel); border: 1px solid var(--border); padding: 2rem;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      margin-bottom: 1.5rem;
+    }
+
+    label { display: block; font-size: 0.65rem; color: var(--dim); letter-spacing: 0.2em; margin-bottom: 0.4rem; margin-top: 1.2rem; }
+    label:first-child { margin-top: 0; }
+    input {
+      width: 100%; background: #030805; border: 1px solid var(--border);
+      color: var(--text); font-family: 'Share Tech Mono', monospace; font-size: 0.85rem;
+      padding: 0.7rem 1rem; outline: none; transition: border-color 0.2s;
+    }
+    input:focus { border-color: var(--green); }
+    .btn {
+      margin-top: 1.5rem; width: 100%; padding: 0.85rem; background: transparent;
+      border: 1px solid var(--green); color: var(--green); font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn:hover { background: var(--green); color: #000; }
+
+    .msg { margin-top: 1rem; font-size: 0.7rem; padding: 0.6rem 1rem; border-left: 3px solid; }
+    .msg-err { border-color: var(--red); color: var(--red); background: rgba(255,51,51,0.07); }
+    .msg-ok  { border-color: var(--green); color: var(--green); background: rgba(0,255,136,0.07); }
+
+    .badge-user {
+      display: inline-block; font-size: 0.55rem; letter-spacing: 0.25em;
+      padding: 0.2rem 0.7rem; border: 1px solid var(--green); color: var(--green); margin-bottom: 1.5rem;
+    }
+
+    /* Cartes documents */
+    .doc-grid { display: grid; gap: 1rem; }
+
+    .doc-card {
+      background: var(--panel); border: 1px solid var(--border); padding: 1.5rem;
+      position: relative; transition: border-color 0.3s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      animation: fadeIn 0.5s ease both;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+    .doc-card:hover { border-color: rgba(0,255,136,0.4); }
+
+    .doc-classif {
+      font-size: 0.55rem; letter-spacing: 0.3em; padding: 0.15rem 0.5rem;
+      border: 1px solid currentColor; display: inline-block; margin-bottom: 1rem;
+    }
+    .classif-sd    { color: var(--red); }
+    .classif-conf  { color: #ffaa00; }
+    .classif-ts    { color: #ff66ff; }
+
+    .doc-code { font-size: 0.6rem; color: var(--dim); letter-spacing: 0.2em; margin-bottom: 0.5rem; }
+    .doc-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #fff; margin-bottom: 1rem; }
+    .doc-content { font-size: 0.75rem; color: var(--text); line-height: 1.8; border-left: 2px solid var(--border); padding-left: 1rem; }
+
+    .logout { font-size: 0.65rem; color: var(--dim); background: none; border: none; cursor: pointer; font-family: 'Share Tech Mono', monospace; letter-spacing: 0.1em; }
+    .logout:hover { color: var(--green); }
+
+    .welcome { font-size: 0.7rem; color: var(--dim); margin-bottom: 2rem; }
+    .welcome span { color: var(--green); }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="hlogo">◈ UTILISATEUR — SOPRA DÉFENSE</span>
+  <div>
+    <button class="logout" id="logout-btn" style="display:none" onclick="logout()">[ DÉCONNEXION ]</button>
+    <a class="hback" href="/">← RETOUR PORTAIL</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═══ LOGIN ═══ -->
+  <div id="login-section">
+    <div class="section-title">AUTHENTIFICATION UTILISATEUR</div>
+    <div class="section-sub">[ ACCÈS DOCUMENTS SECRET DÉFENSE ]</div>
+    <div class="panel">
+      <label>IDENTIFIANT</label>
+      <input type="text" id="username" placeholder="sopra_user" autocomplete="off"/>
+      <label>MOT DE PASSE</label>
+      <input type="password" id="password" placeholder="••••••••"/>
+      <button class="btn" onclick="login()">→ ACCÉDER AUX DOCUMENTS</button>
+      <div id="login-msg"></div>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div id="dashboard-section">
+    <div class="badge-user">HABILITATION VÉRIFIÉE — ACCÈS AUTORISÉ</div>
+    <div class="welcome">Connecté en tant que : <span id="user-label"></span></div>
+    <div class="section-title">DOCUMENTS CLASSIFIÉS</div>
+    <div class="section-sub">[ SECRET DÉFENSE — NE PAS DIVULGUER ]</div>
+    <div class="doc-grid" id="docs-grid"></div>
+  </div>
+
+</main>
+
+<script>
+  let token = localStorage.getItem('user_token') || null;
+  if (token) showDashboard();
+
+  async function login() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const msgEl = document.getElementById('login-msg');
+    msgEl.innerHTML = '';
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        msgEl.innerHTML = `<div class="msg msg-err">⚠ ${data.token || 'Identifiants invalides'}</div>`;
+        return;
+      }
+
+      // Vérifie que c'est bien un USER (un ADMIN peut aussi se connecter ici)
+      const payload = JSON.parse(atob(data.token.split('.')[1]));
+      if (payload.role !== 'USER' && payload.role !== 'ADMIN') {
+        msgEl.innerHTML = `<div class="msg msg-err">⚠ Rôle non reconnu</div>`;
+        return;
+      }
+
+      token = data.token;
+      localStorage.setItem('user_token', token);
+      showDashboard();
+
+    } catch (e) {
+      msgEl.innerHTML = `<div class="msg msg-err">⚠ Erreur réseau : ${e.message}</div>`;
+    }
+  }
+
+  function showDashboard() {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('dashboard-section').style.display = 'block';
+    document.getElementById('logout-btn').style.display = 'inline';
+    document.getElementById('user-label').textContent = payload.sub + ' [' + payload.role + ']';
+    loadDocuments();
+  }
+
+  async function loadDocuments() {
+    try {
+      const res = await fetch('/api/secret/documents', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) { 
+        document.getElementById('docs-grid').innerHTML = '<div class="msg msg-err">⚠ Accès refusé aux documents</div>';
+        return;
+      }
+      const docs = await res.json();
+      const classifClass = { 'SECRET DÉFENSE': 'classif-sd', 'CONFIDENTIEL': 'classif-conf', 'TRÈS SECRET': 'classif-ts' };
+      document.getElementById('docs-grid').innerHTML = docs.map((d, i) => `
+        <div class="doc-card" style="animation-delay:${i * 0.1}s">
+          <div class="doc-classif ${classifClass[d.classification] || 'classif-sd'}">${d.classification}</div>
+          <div class="doc-code">REF: ${d.code}</div>
+          <div class="doc-title">${d.titre}</div>
+          <div class="doc-content">${d.contenu}</div>
+        </div>
+      `).join('');
+    } catch(e) {
+      document.getElementById('docs-grid').innerHTML = `<div class="msg msg-err">⚠ Erreur : ${e.message}</div>`;
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('user_token');
+    token = null;
+    document.getElementById('login-section').style.display = 'block';
+    document.getElementById('dashboard-section').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+</body>
+</html>
